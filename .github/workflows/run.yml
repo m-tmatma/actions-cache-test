@@ -1,0 +1,13 @@
+name: Run
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: mirror
+        run: ./mirror-ttssh2.sh
+  
