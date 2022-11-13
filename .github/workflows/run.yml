@@ -11,7 +11,7 @@ on:
       - 'releases/**'
 
 env:
-  cache-version: v1
+  cache-version: v2
 
 jobs:
   test:
@@ -27,34 +27,37 @@ jobs:
           echo "revision=$REVISION" >> $GITHUB_ENV
           cat  $GITHUB_ENV
 
-      - name: Use the value
-        id: step_two
-        run: |
-          echo "${{ env.revision }}"
-
-      # See https://qiita.com/akubi0w1/items/2f4bf5d3ce7e5e77dfd7
-      # cache保存用にディレクトリを作っておく
       - name: before cache
         run: |
           mkdir -p ttssh2
           ls ttssh2
 
-      - name: Cache-ttssh2
-        id: cache-ttssh2
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.revision }}"
+          echo "key        = ${{ env.cache-version }}-ttssh2-r${{ env.revision }}"
+          echo "cache-hit  = ${{steps.cache-ttssh2.outputs.cache-hit}}"
+
+      - name: Cache
+        id: cache-svn
         uses: actions/cache@v3
-        env:
-          cache-name: cache-ttssh2
         with:
           path: ttssh2
           key: ${{ env.cache-version }}-ttssh2-r${{ env.revision }}
 
-      - name: after cache
+      - name: mirror
         run: |
+          echo "${{ env.revision }}"
           echo "key        = ${{ env.cache-version }}-ttssh2-r${{ env.revision }}"
           echo "cache-hit  = ${{steps.cache-ttssh2.outputs.cache-hit}}"
+          ./mirror-ttssh2.sh
 
-      - name: mirror
-        run: ./mirror-ttssh2.sh
       - name: mirror-take2
-        run: ./mirror-ttssh2.sh
+        run: |
+          echo "${{ env.revision }}"
+          echo "key        = ${{ env.cache-version }}-ttssh2-r${{ env.revision }}"
+          echo "cache-hit  = ${{steps.cache-ttssh2.outputs.cache-hit}}"
+          ./mirror-ttssh2.sh
+
 
