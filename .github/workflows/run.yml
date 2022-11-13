@@ -1,8 +1,14 @@
 name: Run
 on:
-  push:
-    branches:
+  pull_request:
+    # Sequence of patterns matched against refs/heads
+    branches:    
       - main
+  push:
+    branches:    
+      - main
+      - 'feature/**'
+      - 'releases/**'
 jobs:
   test:
     runs-on: ubuntu-latest
