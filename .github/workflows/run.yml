@@ -2,10 +2,10 @@ name: Run
 on:
   pull_request:
     # Sequence of patterns matched against refs/heads
-    branches:    
+    branches:
       - main
   push:
-    branches:    
+    branches:
       - main
       - 'feature/**'
       - 'releases/**'
@@ -14,8 +14,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      # See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
+      - name: Get the youngest revision
+        id: get_revision
+        run: |
+          REVISION=$(svn info  --no-newline --show-item revision http://svn.osdn.net/svnroot/ttssh2/)
+          echo "revision=$REVISION" >> $GITHUB_ENV
+          cat  $GITHUB_ENV
+
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.revision }}"
+
+      - name: Cache-ttssh2
+        id: cache-ttssh2
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-ttssh2
+        with:
+          path: ttssh2
+          key: ${{ env.revision }}
+          restore-keys: |
+            ${{ env.revision }}
+
       - name: mirror
         run: ./mirror-ttssh2.sh
       - name: mirror-take2
         run: ./mirror-ttssh2.sh
-  
+
