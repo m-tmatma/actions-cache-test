@@ -4,7 +4,7 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 URL=file://$SCRIPT_DIR/ttssh2
 
 cd $SCRIPT_DIR
-if [ ! -d ttssh2 ]; then
+if [ ! -f ttssh2/format ]; then
     svnadmin create ttssh2
 
     cd $SCRIPT_DIR/ttssh2
