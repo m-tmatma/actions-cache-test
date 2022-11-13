@@ -36,8 +36,6 @@ jobs:
         with:
           path: ttssh2
           key: ${{ env.revision }}
-          restore-keys: |
-            ${{ env.revision }}
 
       - name: mirror
         run: ./mirror-ttssh2.sh
