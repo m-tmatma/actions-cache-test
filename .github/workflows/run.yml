@@ -52,11 +52,11 @@ jobs:
           cache-name: cache-ttssh2
         with:
           path: ttssh2
-          key: ${{ env.cache-version }}-ttssh2-r${{ env.revision }}
+          key: ${{ env.cache-version }}-ttssh2
 
       - name: after cache
         run: |
-          echo "key        = ${{ env.cache-version }}-ttssh2-r${{ env.revision }}"
+          echo "key        = ${{ env.cache-version }}-ttssh2"
           echo "cache-hit  = ${{steps.Cache-ttssh2.outputs.cache-hit}}"
       - name: mirror
         run: ./mirror-ttssh2.sh
