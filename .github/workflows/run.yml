@@ -28,6 +28,12 @@ jobs:
         run: |
             date
 
+      - name: build number
+        id: build_number
+        run: |
+          echo "github.run_id    : ${{ github.run_id }}""
+          echo "github.run_number: ${{ github.run_number }}""
+
       # See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
       - name: Get the youngest revision
         id: get_revision
