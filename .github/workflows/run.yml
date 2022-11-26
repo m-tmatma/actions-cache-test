@@ -32,6 +32,9 @@ jobs:
       - name: date
         run: |
             date
+      
+      - name: test hash
+            echo 'mirror-ttssh2.sh' ${{ hashFiles('mirror-ttssh2.sh') }}
 
       - name: build number
         id: build_number
