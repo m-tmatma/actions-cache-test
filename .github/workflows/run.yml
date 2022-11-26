@@ -37,7 +37,7 @@ jobs:
       - name: test hash
         run: |
             echo 'mirror-ttssh2.sh' ${{ hashFiles('mirror-ttssh2.sh') }}
-            echo 'array' ${{ hashFiles( join(env.input-files, ',' ) }}
+            echo 'array' ${{ hashFiles( join(env.input-files, ',' ) ) }}
 
       - name: build number
         id: build_number
