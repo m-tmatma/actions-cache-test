@@ -33,7 +33,11 @@ jobs:
       - name: date
         run: |
             date
-      
+       
+      - name: df
+        run: |
+            df
+     
       - name: test hash
         run: |
             echo 'mirror-ttssh2.sh' ${{ hashFiles('mirror-ttssh2.sh') }}
